@@ -2,10 +2,16 @@
 <html lang="en" ng-app="forms">
 <head>
     <title>Forms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-
+<body ng-init="formPage = {rows: [{columns: [{width:1}, {width:3}, {width:5}, {width:3}]}, {columns: [{width:12}]}]}">
+    <form-page form-page="formPage"></form-page>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="app.js"></script>
+    <script src="forms/form-page-directive.js"></script>
+    <script src="forms/form-row-directive.js"></script>
+    <script src="forms/form-column-directive.js"></script>
 </body>
 </html>
