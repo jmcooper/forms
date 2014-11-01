@@ -3,14 +3,20 @@ formsModule
         return {
             restrict: 'E',
             scope: {
-                formPage: '='
+                formId: '=',
+                orderId: '='
             },
-            template: '<form-row ng-repeat="row in formPage.rows" row="row"/>',
+            templateUrl: 'forms/form-page.html',
             replace: true,
             controller: 'FormPageController',
-            controllerAs: 'ctrl'
+            controllerAs: 'formPageController'
         };
     })
-    .controller('FormPageController', function() {
+    .controller('FormPageController', function($scope, formRepository) {
+        $scope.formPageData = {};
+        $scope.formPage = formRepository.get($scope.formId).pages[0];
 
+        $scope.save = function save() {
+            console.log($scope.formPageData);
+        }
     });

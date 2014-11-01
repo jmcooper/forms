@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="sandstone-theme-min.css">
+    <link rel="stylesheet" type="text/css" href="app.css">
 </head>
-<body ng-init="formPage = {rows: [{columns: [{width:1}, {width:3}, {width:5}, {width:3}]}, {columns: [{width:12}]}]}">
-
-    <form-page form-page="formPage"></form-page>
+<body>
+    <section class="container">
+        <form-page form-id="1"></form-page>
+    </section>
 
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="app.js"></script>
     <script src="forms/form-page-directive.js"></script>
     <script src="forms/form-row-directive.js"></script>
     <script src="forms/form-column-directive.js"></script>
+    <script src="forms/form-repository.js"></script>
 </body>
 </html>

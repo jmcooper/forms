@@ -3,12 +3,13 @@ formsModule
         return {
             restrict: 'E',
             scope: {
-                row: '='
+                row: '=',
+                formPageData: '='
             },
-            template: '<div><form-column ng-repeat="column in row.columns" column="column"/></div>',
+            template: '<div><form-column ng-repeat="column in row.columns" column="column" form-page-data="formPageData"/></div>',
             replace: true,
             controller: 'FormRowController',
-            controllerAs: 'ctrl'
+            controllerAs: 'formRowController'
         };
     })
     .controller('FormRowController', function() {

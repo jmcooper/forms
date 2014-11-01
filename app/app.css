@@ -1,0 +1,16 @@
+.field {
+    padding:5px;
+}
+.field-label {
+    padding-right:5px;
+}
+.btn-primary {
+    margin-top:10px;
+    margin-left:20px;
+}
+textarea {
+    width: 100%;
+}
+input[type="text"] {
+    width:100%;
+}
