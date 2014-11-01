@@ -5,14 +5,12 @@ formsModule
             scope: {
                 column: '='
             },
-            template: '<span></span>',
+            template: '<div class="col-md-{{column.width}}">Column</div>',
             replace: true,
             controller: 'FormColumnController',
             controllerAs: 'ctrl'
         };
     })
     .controller('FormColumnController', function($scope, $element, $attrs, $transclude, $compile) {
-//        var html = '<div class="col-md-"' + $scope.column.width + '><input type="text"/></div>';
-//
-//        $compile(html)($scope).appendTo($element);
+
     });

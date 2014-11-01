@@ -5,7 +5,7 @@ formsModule
             scope: {
                 row: '='
             },
-            template: '<form-column ng-repeat="column in row.columns" column="column"/>',
+            template: '<div><form-column ng-repeat="column in row.columns" column="column"/></div>',
             replace: true,
             controller: 'FormRowController',
             controllerAs: 'ctrl'
