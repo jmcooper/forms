@@ -14,27 +14,28 @@ formsModule
     })
     .controller('FormColumnController', function($scope, $element, $attrs, $transclude, $compile) {
         var div = angular.element('<div class="field"></div>');
-        var ngModel = 'formPageData.field' + $scope.column.field.id;
+        var field = $scope.column.field;
+        var ngModel = 'formPageData.field' + field.id;
 
-        if ($scope.column.field.label)
+        if (field.label)
             appendLabel();
 
-        if ($scope.column.field.options && $scope.column.field.options.length > 0)
+        if (field.options && field.options.length > 0)
             appendSelectList();
 
-        if ($scope.column.field.textBox)
+        if (field.textBox)
             appendTextBox();
 
         $element.append(div);
 
         function appendLabel() {
             var label = angular.element('<span class="field-label">{{column.field.label}}</span>');
-            div.append($compile(label)($scope));
+            appendField(label);
         }
 
         function appendSelectList() {
             var selectList = angular.element('<select ng-model="' + ngModel + '" ng-options="option.label for option in column.field.options"></select>');
-            div.append($compile(selectList)($scope));
+            appendField(selectList);
         }
 
         function appendTextBox() {
@@ -44,6 +45,33 @@ formsModule
             else
                 textBox = angular.element('<input type="text" />');
 
-            div.append($compile(textBox)($scope));
+            appendField(textBox);
+        }
+
+        function appendField(fieldElement) {
+            if (field.displayRules && field.displayRules.length > 0)
+                div.attr('ng-show', buildShowStatement());
+
+            div = $compile(div)($scope);
+            div.append($compile(fieldElement)($scope));
+        }
+
+        function buildShowStatement() {
+            var statement = '';
+            angular.forEach(field.displayRules, function(rule) {
+                if (statement)  statement += ' && ';
+                statement += buildShowStatementForRule(rule);
+            });
+            return statement;
+        }
+
+        function buildShowStatementForRule(rule) {
+            var statement = '';
+            angular.forEach(rule.conditions, function(condition) {
+                if (statement)  statement += ' && ';
+                statement += 'formPageData.field' + condition.fieldId + '.value=="' + condition.value + '"';
+            });
+            console.log(statement);
+            return statement;
         }
     });

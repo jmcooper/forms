@@ -20,7 +20,7 @@ formsModule.factory('formRepository', function() {
                                     }
                                 },
                                 {
-                                    width: 4,
+                                    width: 9,
                                     field: {
                                         id: 2,
                                         label: 'Recommendations to be Provided:',
@@ -34,7 +34,15 @@ formsModule.factory('formRepository', function() {
                                         width: 12,
                                         field: {
                                             id: 3,
-                                            label: 'If Yes is selected for recommendations, then be sure to complete the recommendations section on the last page of this form.'
+                                            label: 'If Yes is selected for recommendations, then be sure to complete the recommendations section on the last page of this form.',
+                                            displayRules: [
+                                                {
+                                                    conditions: [
+                                                        {fieldId: 2, value: 'Yes'}
+                                                    ]
+                                                }
+                                            ]
+
                                         }
                                     }
                                 ]
