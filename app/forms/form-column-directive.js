@@ -17,6 +17,9 @@ formsModule
         var field = $scope.column.field;
         var ngModel = 'formPageData.field' + field.id;
 
+        $scope.parseFloat = parseFloat;
+        $scope.parseDate = Date.parse;
+
         if (field.label)
             appendLabel();
 
@@ -41,9 +44,9 @@ formsModule
         function appendTextBox() {
             var textBox;
             if ($scope.column.field.textBox.lines && $scope.column.field.textBox.lines > 1)
-                textBox = angular.element('<br/><textarea rows="{{column.field.textBox.lines}}>"></textarea>');
+                textBox = angular.element('<br/><textarea ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}>"></textarea>');
             else
-                textBox = angular.element('<input type="text" />');
+                textBox = angular.element('<input ng-model="' + ngModel + '" type="text" />');
 
             appendField(textBox);
         }
@@ -67,11 +70,19 @@ formsModule
 
         function buildShowStatementForRule(rule) {
             var statement = '';
+            var operator = rule.or ? ' || ' : ' && ';
+
             angular.forEach(rule.conditions, function(condition) {
-                if (statement)  statement += ' && ';
-                statement += 'formPageData.field' + condition.fieldId + '.value=="' + condition.value + '"';
+                if (statement)  statement += operator;
+
+                if (condition.numericCompareFieldId1) {
+                    statement += 'parseFloat(formPageData.field' + condition.numericCompareFieldId1 + ')' + condition.comparison + ' parseFloat(formPageData.field' + condition.numericCompareFieldId2 + ')';
+                } else if (condition.dateCompareFieldId1) {
+                    statement += 'parseDate(formPageData.field' + condition.dateCompareFieldId1 + ')' + condition.comparison + ' parseDate(formPageData.field' + condition.dateCompareFieldId2 + ')';
+                } else {
+                    statement += 'formPageData.field' + condition.fieldId + '.value=="' + condition.value + '"';
+                }
             });
-            console.log(statement);
-            return statement;
+            return '(' + statement + ')';
         }
     });

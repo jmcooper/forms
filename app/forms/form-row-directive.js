@@ -6,7 +6,7 @@ formsModule
                 row: '=',
                 formPageData: '='
             },
-            template: '<div><form-column ng-repeat="column in row.columns" column="column" form-page-data="formPageData"/></div>',
+            template: '<div class="clearfix"><form-column ng-repeat="column in row.columns" column="column" form-page-data="formPageData"/></div>',
             replace: true,
             controller: 'FormRowController',
             controllerAs: 'formRowController'
