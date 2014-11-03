@@ -12,7 +12,7 @@ formsModule
             controllerAs: 'formColumnController'
         };
     })
-    .controller('FormColumnController', function($scope, $element, $attrs, $transclude, $compile) {
+    .controller('FormColumnController', function($scope, $element, $attrs, $transclude, $compile, rulesEngine) {
         var div = angular.element('<div class="field"></div>');
         var field = $scope.column.field;
         var ngModel = 'formPageData.field' + field.id;
@@ -53,36 +53,11 @@ formsModule
 
         function appendField(fieldElement) {
             if (field.displayRules && field.displayRules.length > 0)
-                div.attr('ng-show', buildShowStatement());
+                div.attr('ng-show', rulesEngine.buildRuleExpression(field));
 
             div = $compile(div)($scope);
             div.append($compile(fieldElement)($scope));
         }
 
-        function buildShowStatement() {
-            var statement = '';
-            angular.forEach(field.displayRules, function(rule) {
-                if (statement)  statement += ' && ';
-                statement += buildShowStatementForRule(rule);
-            });
-            return statement;
-        }
 
-        function buildShowStatementForRule(rule) {
-            var statement = '';
-            var operator = rule.or ? ' || ' : ' && ';
-
-            angular.forEach(rule.conditions, function(condition) {
-                if (statement)  statement += operator;
-
-                if (condition.numericCompareFieldId1) {
-                    statement += 'parseFloat(formPageData.field' + condition.numericCompareFieldId1 + ')' + condition.comparison + ' parseFloat(formPageData.field' + condition.numericCompareFieldId2 + ')';
-                } else if (condition.dateCompareFieldId1) {
-                    statement += 'parseDate(formPageData.field' + condition.dateCompareFieldId1 + ')' + condition.comparison + ' parseDate(formPageData.field' + condition.dateCompareFieldId2 + ')';
-                } else {
-                    statement += 'formPageData.field' + condition.fieldId + '.value=="' + condition.value + '"';
-                }
-            });
-            return '(' + statement + ')';
-        }
     });
