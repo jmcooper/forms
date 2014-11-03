@@ -11,14 +11,39 @@ formsModule.factory('formRepository', function() {
                                     field: {
                                         id: 1,
                                         label: 'Opinion of Overall Risk:',
+                                        dateType: 'Number|Date|undefined',
                                         options: [
                                             {label: 'Very High', value: 'Very High'},
                                             {label: 'High', value: 'High'},
                                             {label: 'Medium', value: 'Medium'},
                                             {label: 'Low', value: 'Low'}
-                                        ]
-                                    }
-                                },
+                                        ],
+//                                        validation: {
+//                                            required: true,
+//                                            minValue: 'number|date',
+//                                            maxValue: 'number|date',
+//                                            regex: 'abc',
+//                                            requiredRules: [
+//                                                {
+//                                                    or: true,
+//                                                    conditions: [
+//                                                        {fieldId: 2, value: 'Yes'}
+////*************                                                        //{fieldId: 2, operator: '>=', value: 10} //need to do this
+//                                                    ]
+//                                                }
+//                                            ],
+                                            requiredValueRules: {
+                                                expectedValue: 'foo',
+                                                rules: [
+                                                {
+                                                    or: true,
+                                                    conditions: [
+                                                        {fieldId: 2, value: 'Yes'}
+                                                    ]
+                                                }]
+                                            }
+                                        }
+                                    },
                                 {
                                     width: 9,
                                     field: {
@@ -123,7 +148,7 @@ formsModule.factory('formRepository', function() {
                                         width: 6,
                                         field: {
                                             id: 9,
-                                            label: 'Bob is sooo old!',
+                                            label: 'Bob is so old!',
                                             displayRules: [
                                                 {
                                                     conditions: [
@@ -136,12 +161,32 @@ formsModule.factory('formRepository', function() {
                                     }
                                 ]
                             },
+                            //{
+                            //    columns: [
+                            //        ,
+                            //        {
+                            //            width: 6,
+                            //            field: {
+                            //                id: 10,
+                            //                label: 'Bob is so very very old!',
+                            //                displayRules: [
+                            //                    {
+                            //                        conditions: [
+                            //                            {numericCompareFieldId1: 7, comparison: '>=', value: 10}
+                            //                        ]
+                            //                    }
+                            //                ]
+                            //
+                            //            }
+                            //        }
+                            //    ]
+                            //},
                             {
                                 columns: [
                                     {
                                         width: 3,
                                         field: {
-                                            id: 10,
+                                            id: 11,
                                             label: 'Jim\'s birth date',
                                             textBox: {lines: 1}
                                         }
@@ -149,7 +194,7 @@ formsModule.factory('formRepository', function() {
                                     {
                                         width: 3,
                                         field: {
-                                            id: 11,
+                                            id: 12,
                                             label: 'Bob\'s birth date',
                                             textBox: {lines: 1}
                                         }
@@ -157,16 +202,15 @@ formsModule.factory('formRepository', function() {
                                     {
                                         width: 6,
                                         field: {
-                                            id: 12,
+                                            id: 13,
                                             label: 'Jim is so young!',
                                             displayRules: [
                                                 {
                                                     conditions: [
-                                                        {dateCompareFieldId1: 10, dateCompareFieldId2: 11, comparison: '>'}
+                                                        {dateCompareFieldId1: 11, dateCompareFieldId2: 12, comparison: '>'}
                                                     ]
                                                 }
                                             ]
-
                                         }
                                     }
                                 ]
