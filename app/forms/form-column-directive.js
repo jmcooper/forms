@@ -33,12 +33,12 @@ formsModule
 
         function appendLabel() {
             var label = angular.element('<span class="field-label">{{column.field.label}}</span>');
-            appendField(label);
+            appendField(label, false);
         }
 
         function appendSelectList() {
             var selectList = angular.element('<select ng-model="' + ngModel + '" ng-options="option.label for option in column.field.options"></select>');
-            appendField(selectList);
+            appendField(selectList, true);
         }
 
         function appendTextBox() {
@@ -48,13 +48,20 @@ formsModule
             else
                 textBox = angular.element('<input ng-model="' + ngModel + '" type="text" />');
 
-            appendField(textBox);
+            appendField(textBox, true);
         }
 
-        function appendField(fieldElement) {
+        function appendField(fieldElement, validate) {
             if (field.displayRules && field.displayRules.length > 0)
                 div.attr('ng-show', rulesEngine.buildRuleExpression(field));
 
+            if (validate && field.validation) {
+                fieldElement.attr('validation', '');
+                if (field.validation.required) {
+                    fieldElement.attr('required', 'required');
+                    console.log(fieldElement[0])
+                }
+            }
             div = $compile(div)($scope);
             div.append($compile(fieldElement)($scope));
         }

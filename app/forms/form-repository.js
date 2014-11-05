@@ -11,7 +11,7 @@ formsModule.factory('formRepository', function() {
                                     field: {
                                         id: 1,
                                         label: 'Opinion of Overall Risk:',
-                                        dateType: 'Number|Date|undefined',
+                                        //dateType: 'Number|Date|undefined',
                                         options: [
                                             {label: 'Very High', value: 'Very High'},
                                             {label: 'High', value: 'High'},
@@ -132,14 +132,19 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 7,
+                                            //dataType: 'int',
                                             label: 'Bob\'s age',
-                                            textBox: {lines: 1}
+                                            textBox: {lines: 1},
+                                            validation: {
+                                                required: true
+                                            }
                                         }
                                     },
                                     {
                                         width: 3,
                                         field: {
                                             id: 8,
+                                            //dataType: 'int',
                                             label: 'Jim\'s age',
                                             textBox: {lines: 1}
                                         }
