@@ -2,16 +2,17 @@
 
 formsModule.directive('validation', function ($compile) {
     return {
-        require: 'ngModel',
+        require: ['ngModel'],
         restrict: 'A',
         link: function(scope, element, attrs) {
-            if (!element[0].form)
+            if (!scope.form)
                 return;
 
-            var formName = element[0].form.name;
+            var formName = scope.form.name;
 
             if (attrs.required) {
-                var requiredMessage = angular.element('<small ng-show="' + formName + '[\'' + attrs.name + '\'].$error.required && ' + formName + '[\'' + attrs.name + '\'].$dirty">Required</small>');
+                var requiredMessage = angular.element('<span ng-show="' + formName + '[\'' + attrs.name + '\'].$error.required && ' + formName + '[\'' + attrs.name + '\'].$dirty">Required</span>');
+                console.log($compile(requiredMessage)(scope));
                 element.after($compile(requiredMessage)(scope));
             }
             //if (attrs.ngPattern) {
