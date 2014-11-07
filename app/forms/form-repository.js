@@ -45,7 +45,7 @@ formsModule.factory('formRepository', function() {
                                         }
                                     },
                                 {
-                                    width: 9,
+                                    width: 3,
                                     field: {
                                         id: 2,
                                         label: 'Recommendations to be Provided:',

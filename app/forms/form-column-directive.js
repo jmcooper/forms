@@ -6,7 +6,7 @@ formsModule
                 column: '=',
                 formPageData: '='
             },
-            template: '<div ng-class="getFormGroupClass(this)"></div>',
+            template: '<div ng-class="getFormGroupClass()" ng-show="show()" ></div>',
             replace: true,
             require: '^form',
             controller: 'FormColumnController',
@@ -47,31 +47,34 @@ formsModule
                 }
 
                 function appendField(fieldElement, validate) {
-                    var div = angular.element('<div></div>');
-
-                    if (field.displayRules && field.displayRules.length > 0)
-                        div.attr('ng-show', rulesEngine.buildRuleExpression(field));
-
                     if (validate && field.validation) {
                         fieldElement.attr('validation', '');
                         if (field.validation.required) {
                             fieldElement.attr('required', 'required');
                         }
                     }
-                    var divField = fieldElement.appendTo(div);
-                    var result = $(divField).appendTo(element);
+                    var result = $(fieldElement).appendTo(element);
                     $compile(result)(scope);
                 }
             }
         };
     })
-    .controller('FormColumnController', function($scope) {
-        $scope.getFormGroupClass = function() {
+    .controller('FormColumnController', function($scope, rulesEngine) {
+        var displayRule = rulesEngine.buildRuleExpression($scope.column.field);
+
+        $scope.getFormGroupClass = function () {
             var result = "form-group col-md-" + $scope.column.width;
             var field = $scope.form['field' + $scope.column.field.id];
-            if ($scope.column.field.validation && field.$invalid && field.$dirty ) {
+            if ($scope.column.field.validation && field.$invalid && field.$dirty) {
                 result += " has-error";
             }
             return result
+        };
+
+        $scope.show = function() {
+            if ($scope.column.field.displayRules && $scope.column.field.displayRules.length > 0)
+                return $scope.$eval(displayRule);
+
+            return true;
         };
     });
