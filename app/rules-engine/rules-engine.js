@@ -26,7 +26,7 @@ formsModule.factory('rulesEngine', function() {
             } else if (condition.dateCompareFieldId1) {
                 expression += '(formPageData.field' + condition.dateCompareFieldId1 + ' | parseDate) ' + condition.comparison + ' (formPageData.field' + condition.dateCompareFieldId2 + ' | parseDate)';
             } else {
-                expression += 'formPageData.field' + condition.fieldId + '.value=="' + condition.value + '"';
+                expression += 'formPageData.field' + condition.fieldId + '.value==\'' + condition.value + '\'';
             }
         });
         return '' + expression + '';
