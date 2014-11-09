@@ -3,6 +3,7 @@
         <div class="col-md-12">
             <div>
                 <form name="form" novalidate>
+                    <hidden-field ng-repeat="hiddenField in formPage.hiddenFields" field="hiddenField" form-page-data="formPageData"></hidden-field>
                     <form-row ng-repeat="row in formPage.rows" row="row" form-page-data="formPageData" all-fields="allFields" save="save()"></form-row>
                 </form>
             </div>

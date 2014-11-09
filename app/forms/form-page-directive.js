@@ -16,7 +16,10 @@ formsModule
         $scope.formPageData = {};
         var formMetaData = formRepository.get($scope.formId);
         $scope.formPage = formMetaData.pages[0];
-        $scope.allFields = _.map(_.flatten(formMetaData.pages[0].rows, 'columns'), 'field');
+        $scope.allFields = _.map(_.flatten(formMetaData.pages[0].rows, 'columns'), 'field')
+            .concat(formMetaData.pages[0].hiddenFields);
+
+
 
         $scope.save = function save() {
             console.log($scope.formPageData);

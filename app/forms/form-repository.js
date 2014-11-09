@@ -4,6 +4,12 @@ formsModule.factory('formRepository', function() {
             return {
                 pages: [
                     {
+                        hiddenFields: [
+                            {
+                                id: 100,
+                                value: 'This is a hidden value.'
+                            }
+                        ],
                         rows: [
                             {
                                 columns: [
