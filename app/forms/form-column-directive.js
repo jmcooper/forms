@@ -20,6 +20,10 @@ formsModule
                 ngModel = 'formPageData.field' + field.id;
                 scope.form = form;
 
+                if (field.defaultValue) {
+                    scope.formPageData['field' + field.id] = field.defaultValue;
+                }
+
                 if (field.label)
                     appendLabel();
 
@@ -37,7 +41,7 @@ formsModule
         }
 
         function appendSelectList() {
-            var selectList = angular.element('<select class="form-control" ng-model="' + ngModel + '" ng-options="option.label for option in column.field.options"></select>');
+            var selectList = angular.element('<select class="form-control" ng-model="' + ngModel + '" ng-options="option.label as option.value for option in column.field.options"></select>');
             appendField(selectList, true);
         }
 

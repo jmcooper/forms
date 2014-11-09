@@ -13,7 +13,7 @@ formsModule.factory('formRepository', function() {
                                             id: 1,
                                             displayName: 'Overall Risk',
                                             label: 'Opinion of Overall Risk:',
-                                            //dateType: 'Number|Date|undefined',
+                                            defaultValue: 'Low',
                                             options: [
                                                 {label: 'Very High', value: 'Very High'},
                                                 {label: 'High', value: 'High'},
@@ -163,6 +163,7 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 7,
+                                            defaultValue: 42,
                                             dataType: 'integer',
                                             label: 'Bob\'s age',
                                             textBox: {lines: 1},
