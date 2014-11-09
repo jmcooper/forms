@@ -1,5 +1,5 @@
 formsModule
-    .directive('formColumn', function($compile, rulesEngine) {
+    .directive('formColumn', function($compile, rulesEngine, $location, parseDateFilter, parseFloatFilter) {
         var directiveScope, directiveElement, field, ngModel;
         return {
             restrict: 'E',
@@ -20,9 +20,6 @@ formsModule
                 ngModel = 'formPageData.field' + field.id;
                 scope.form = form;
 
-                if (field.defaultValue) {
-                    scope.formPageData['field' + field.id] = field.defaultValue;
-                }
 
                 if (field.label)
                     appendLabel();
@@ -32,8 +29,28 @@ formsModule
 
                 if (field.textBox)
                     appendTextBox();
+
+                var defaultValue = getDefaultValue();
+                if (defaultValue) {
+                    if (scope.form['field' + field.id]) {
+                        scope.form['field' + field.id].$setViewValue(defaultValue);
+                        scope.form['field' + field.id].$render();
+                    }
+                }
+
             }
         };
+
+        function getDefaultValue() {
+            var valueFromQueryString = $location.search()['field' + field.id];
+            var parsedValue = valueFromQueryString;
+            if (field.dataType==='date')
+                parsedValue = parseDateFilter(valueFromQueryString);
+            else if (field.dataType==='integer' || field.dataType==='decimal')
+                parsedValue = parseFloatFilter(valueFromQueryString);
+
+            return parsedValue ? parsedValue : field.defaultValue;
+        }
 
         function appendLabel() {
             var label = angular.element('<span class="field-label control-label">{{column.field.label}}</span>');
@@ -41,7 +58,7 @@ formsModule
         }
 
         function appendSelectList() {
-            var selectList = angular.element('<select class="form-control" ng-model="' + ngModel + '" ng-options="option.label as option.value for option in column.field.options"></select>');
+            var selectList = angular.element('<select class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" ng-options="option.label as option.value for option in column.field.options"></select>');
             appendField(selectList, true);
         }
 
@@ -50,7 +67,7 @@ formsModule
             if (field.textBox.lines && field.textBox.lines > 1)
                 textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + ' rows="{{column.field.textBox.lines}}" ng-trim="true"></textarea>');
             else
-                textBox = angular.element('<input class="form-control" name="field' + field.id + ' type="' + getInputType(field.dataType) + '" ng-trim="true"/>');
+                textBox = angular.element('<input class="form-control" name="field' + field.id + '" type="' + getInputType(field.dataType) + '" ng-trim="true"/>');
 
             if (field.readyOnlyValue) {
                 textBox.attr('disabled', 'true');
@@ -123,8 +140,9 @@ formsModule
         };
 
         $scope.show = function() {
-            if ($scope.column.field.displayRules && $scope.column.field.displayRules.length > 0)
+            if ($scope.column.field.displayRules && $scope.column.field.displayRules.length > 0) {
                 return $scope.$eval(displayRule);
+            }
 
             return true;
         };

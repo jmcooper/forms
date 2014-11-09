@@ -19,8 +19,6 @@ formsModule
         $scope.allFields = _.map(_.flatten(formMetaData.pages[0].rows, 'columns'), 'field')
             .concat(formMetaData.pages[0].hiddenFields);
 
-
-
         $scope.save = function save() {
             console.log($scope.formPageData);
         }

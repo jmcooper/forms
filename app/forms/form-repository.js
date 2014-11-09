@@ -105,27 +105,6 @@ formsModule.factory('formRepository', function() {
                                     {
                                         width: 12,
                                         field: {
-                                            id: 5,
-                                            label: 'If Very High is selected for Overall Risk OR Yes is selected for Recommendations, then...',
-                                            displayRules: [
-                                                {
-                                                    or: true,
-                                                    conditions: [
-                                                        {fieldId: 1, value: 'Very High'},
-                                                        {fieldId: 2, value: 'Yes'}
-                                                    ]
-                                                }
-                                            ]
-
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                columns: [
-                                    {
-                                        width: 12,
-                                        field: {
                                             id: 6,
                                             displayName: 'Business Description',
                                             label: 'Describe business operations, business description, services and products offered, and surrounding buildings/exposures, etc.',
