@@ -14,7 +14,9 @@ formsModule
     })
     .controller('FormPageController', function($scope, formRepository) {
         $scope.formPageData = {};
-        $scope.formPage = formRepository.get($scope.formId).pages[0];
+        var formMetaData = formRepository.get($scope.formId);
+        $scope.formPage = formMetaData.pages[0];
+        $scope.allFields = _.map(_.flatten(formMetaData.pages[0].rows, 'columns'), 'field');
 
         $scope.save = function save() {
             console.log($scope.formPageData);

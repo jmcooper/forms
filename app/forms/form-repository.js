@@ -160,7 +160,7 @@ formsModule.factory('formRepository', function() {
                                             displayRules: [
                                                 {
                                                     conditions: [
-                                                        {numericCompareFieldId1: 7, numericCompareFieldId2: 8, comparison: '>='}
+                                                        {compareFieldId1: 7, compareFieldId2: 8, comparison: '>='}
                                                     ]
                                                 }
                                             ]
@@ -169,26 +169,25 @@ formsModule.factory('formRepository', function() {
                                     }
                                 ]
                             },
-                            //{
-                            //    columns: [
-                            //        ,
-                            //        {
-                            //            width: 6,
-                            //            field: {
-                            //                id: 10,
-                            //                label: 'Bob is so very very old!',
-                            //                displayRules: [
-                            //                    {
-                            //                        conditions: [
-                            //                            {numericCompareFieldId1: 7, comparison: '>=', value: 10}
-                            //                        ]
-                            //                    }
-                            //                ]
-                            //
-                            //            }
-                            //        }
-                            //    ]
-                            //},
+                            {
+                                columns: [
+                                    {
+                                        width: 6,
+                                        field: {
+                                            id: 10,
+                                            label: 'Bob is so very very old!',
+                                            displayRules: [
+                                                {
+                                                    conditions: [
+                                                        {compareFieldId1: 7, comparison: '>=', value: 50}
+                                                    ]
+                                                }
+                                            ]
+
+                                        }
+                                    }
+                                ]
+                            },
                             {
                                 columns: [
                                     {
@@ -217,7 +216,7 @@ formsModule.factory('formRepository', function() {
                                             displayRules: [
                                                 {
                                                     conditions: [
-                                                        {dateCompareFieldId1: 11, dateCompareFieldId2: 12, comparison: '>'}
+                                                        {compareFieldId1: 11, compareFieldId2: 12, dataType: 'integer', comparison: '>'}
                                                     ]
                                                 }
                                             ]

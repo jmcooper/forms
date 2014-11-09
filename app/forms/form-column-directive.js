@@ -1,11 +1,12 @@
 formsModule
-    .directive('formColumn', function($compile, rulesEngine) {
+    .directive('formColumn', function($compile) {
         var directiveScope, directiveElement, field, ngModel;
         return {
             restrict: 'E',
             scope: {
                 column: '=',
-                formPageData: '='
+                formPageData: '=',
+                allFields: '='
             },
             template: '<div ng-class="getFormGroupClass()" ng-show="show()" ></div>',
             replace: true,
@@ -77,7 +78,7 @@ formsModule
         }
     })
     .controller('FormColumnController', function($scope, rulesEngine) {
-        var displayRule = rulesEngine.buildRuleExpression($scope.column.field);
+        var displayRule = rulesEngine.buildRuleExpression($scope.column.field, $scope.allFields);
 
         $scope.getFormGroupClass = function () {
             var result = "form-group col-md-" + $scope.column.width;
