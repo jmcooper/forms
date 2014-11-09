@@ -10,6 +10,7 @@ formsModule.factory('formRepository', function() {
                                     width: 3,
                                     field: {
                                         id: 1,
+                                        displayName: 'Overall Risk',
                                         label: 'Opinion of Overall Risk:',
                                         //dateType: 'Number|Date|undefined',
                                         options: [
@@ -48,6 +49,7 @@ formsModule.factory('formRepository', function() {
                                     width: 3,
                                     field: {
                                         id: 2,
+                                        displayName: 'Recommendations Provided',
                                         label: 'Recommendations to be Provided:',
                                         options: [{label: 'Yes', value: 'Yes'}, {label: 'No', value: 'No'}]
                                     }
@@ -120,6 +122,7 @@ formsModule.factory('formRepository', function() {
                                         width: 12,
                                         field: {
                                             id: 6,
+                                            displayName: 'Business Description',
                                             label: 'Describe business operations, business description, services and products offered, and surrounding buildings/exposures, etc.',
                                             textBox: {lines: 5}
                                         }
@@ -132,7 +135,7 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 7,
-                                            //dataType: 'int',
+                                            dataType: 'integer',
                                             label: 'Bob\'s age',
                                             textBox: {lines: 1},
                                             validation: {
@@ -144,7 +147,7 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 8,
-                                            //dataType: 'int',
+                                            dataType: 'decimal',
                                             label: 'Jim\'s age',
                                             textBox: {lines: 1}
                                         }
@@ -192,6 +195,7 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 11,
+                                            dataType: 'date',
                                             label: 'Jim\'s birth date',
                                             textBox: {lines: 1}
                                         }
@@ -200,6 +204,7 @@ formsModule.factory('formRepository', function() {
                                         width: 3,
                                         field: {
                                             id: 12,
+                                            dataType: 'date',
                                             label: 'Bob\'s birth date',
                                             textBox: {lines: 1}
                                         }

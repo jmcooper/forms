@@ -1,5 +1,6 @@
 formsModule
     .directive('formColumn', function($compile, rulesEngine) {
+        var directiveScope, directiveElement, field, ngModel;
         return {
             restrict: 'E',
             scope: {
@@ -12,9 +13,10 @@ formsModule
             controller: 'FormColumnController',
             controllerAs: 'formColumnController',
             link: function(scope, element, attrs, form) {
-                var field = scope.column.field;
-                var ngModel = 'formPageData.field' + field.id;
-
+                directiveScope = scope;
+                directiveElement = element;
+                field = directiveScope.column.field;
+                ngModel = 'formPageData.field' + field.id;
                 scope.form = form;
 
                 if (field.label)
@@ -25,39 +27,54 @@ formsModule
 
                 if (field.textBox)
                     appendTextBox();
-
-                function appendLabel() {
-                    var label = angular.element('<span class="field-label control-label">{{column.field.label}}</span>');
-                    appendField(label, false);
-                }
-
-                function appendSelectList() {
-                    var selectList = angular.element('<select class="form-control" ng-model="' + ngModel + '" ng-options="option.label for option in column.field.options"></select>');
-                    appendField(selectList, true);
-                }
-
-                function appendTextBox() {
-                    var textBox;
-                    if (scope.column.field.textBox.lines && scope.column.field.textBox.lines > 1)
-                        textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}>"></textarea>');
-                    else
-                        textBox = angular.element('<input class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" type="text" />');
-
-                    appendField(textBox, true);
-                }
-
-                function appendField(fieldElement, validate) {
-                    if (validate && field.validation) {
-                        fieldElement.attr('validation', '');
-                        if (field.validation.required) {
-                            fieldElement.attr('required', 'required');
-                        }
-                    }
-                    var result = $(fieldElement).appendTo(element);
-                    $compile(result)(scope);
-                }
             }
         };
+
+        function appendLabel() {
+            var label = angular.element('<span class="field-label control-label">{{column.field.label}}</span>');
+            appendField(label, false);
+        }
+
+        function appendSelectList() {
+            var selectList = angular.element('<select class="form-control" ng-model="' + ngModel + '" ng-options="option.label for option in column.field.options"></select>');
+            appendField(selectList, true);
+        }
+
+        function appendTextBox() {
+            var textBox;
+            if (field.textBox.lines && field.textBox.lines > 1)
+                textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}>"></textarea>');
+            else
+                textBox = angular.element('<input class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" type="' + getInputType(field.dataType) + '" />');
+
+            appendField(textBox, true);
+        }
+
+        function appendField(fieldElement, validate) {
+            if (validate && (field.validation || field.dataType)) {
+                fieldElement.attr('validation', field.displayName ? field.displayName : field.label);
+                if (field.validation) {
+                    if (field.validation.required) {
+                        fieldElement.attr('required', 'required');
+                    }
+                    if (field.dataType) {
+                        fieldElement.attr(field.dataType, '');
+                    }
+                }
+            }
+            var result = $(fieldElement).appendTo(directiveElement);
+            $compile(result)(directiveScope);
+        }
+
+        function getInputType(dataType) {
+            if (dataType === 'integer' || dataType === 'decimal') {
+                return 'number';
+            }
+            if (dataType === 'date') {
+                return 'date';
+            }
+            return 'text';
+        }
     })
     .controller('FormColumnController', function($scope, rulesEngine) {
         var displayRule = rulesEngine.buildRuleExpression($scope.column.field);
