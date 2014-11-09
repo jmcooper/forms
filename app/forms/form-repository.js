@@ -258,7 +258,7 @@ formsModule.factory('formRepository', function() {
                                             label: 'SSN',
                                             textBox: {lines: 1},
                                             validation: {
-                                                pattern: 'abc123'
+                                                pattern: '^[0-9]{3}-[0-9]{2}-[0-9]{4}$'
                                             }
                                         }
                                     }
