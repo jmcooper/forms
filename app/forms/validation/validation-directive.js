@@ -9,6 +9,7 @@ formsModule.directive('validation', function ($compile) {
 
             var formName = element[0].form.name;
 
+
             if (attrs.required) {
                 var errorMessageElement = getNewErrorMessageElement()
                     .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.required && ' + formName + '[\'' + attrs.name + '\'].$dirty')
@@ -33,7 +34,19 @@ formsModule.directive('validation', function ($compile) {
                     .text(attrs.validation + ' must be no more than ' + attrs.ngMaxlength + ' characters');
                 element.after($compile(errorMessageElement)(scope));
             }
-            if (attrs.type="number") {
+            if (attrs.min) {
+                var errorMessageElement = getNewErrorMessageElement()
+                    .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.min && ' + formName + '[\'' + attrs.name + '\'].$dirty')
+                    .text(attrs.validation + ' must be more than ' + attrs.min);
+                element.after($compile(errorMessageElement)(scope));
+            }
+            if (attrs.max) {
+                var errorMessageElement = getNewErrorMessageElement()
+                    .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.max && ' + formName + '[\'' + attrs.name + '\'].$dirty')
+                    .text(attrs.validation + ' must be less than ' + attrs.max );
+                element.after($compile(errorMessageElement)(scope));
+            }
+            if (attrs.type==="number") {
                 var errorMessageElement = getNewErrorMessageElement()
                     .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.number && ' + formName + '[\'' + attrs.name + '\'].$dirty')
                     .text(attrs.validation + ' must be a valid number');
@@ -51,7 +64,7 @@ formsModule.directive('validation', function ($compile) {
                     .text(attrs.validation + ' must be a valid decimal');
                 element.after($compile(errorMessageElement)(scope));
             }
-            if (attrs.type="date") {
+            if (attrs.type==="date") {
                 var errorMessageElement = getNewErrorMessageElement()
                     .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.date && ' + formName + '[\'' + attrs.name + '\'].$dirty')
                     .text(attrs.validation + ' must be a valid date');

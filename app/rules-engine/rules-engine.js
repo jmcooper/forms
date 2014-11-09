@@ -10,7 +10,6 @@ formsModule.factory('rulesEngine', function() {
         }
     };
 
-
     function buildExpressionForRule(rule, allFields) {
         var expression = '';
         var operator = rule.or ? ' || ' : ' && ';

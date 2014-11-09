@@ -124,7 +124,11 @@ formsModule.factory('formRepository', function() {
                                             id: 6,
                                             displayName: 'Business Description',
                                             label: 'Describe business operations, business description, services and products offered, and surrounding buildings/exposures, etc.',
-                                            textBox: {lines: 5}
+                                            textBox: {lines: 5},
+                                            validation: {
+                                                minlength: 20,
+                                                maxlength: 500
+                                            }
                                         }
                                     }
                                 ]
@@ -139,7 +143,9 @@ formsModule.factory('formRepository', function() {
                                             label: 'Bob\'s age',
                                             textBox: {lines: 1},
                                             validation: {
-                                                required: true
+                                                required: true,
+                                                min: 20,
+                                                max: 60
                                             }
                                         }
                                     },
@@ -149,11 +155,15 @@ formsModule.factory('formRepository', function() {
                                             id: 8,
                                             dataType: 'decimal',
                                             label: 'Jim\'s age',
-                                            textBox: {lines: 1}
+                                            textBox: {lines: 1},
+                                            validation: {
+                                                min: 20,
+                                                max: 60
+                                            }
                                         }
                                     },
                                     {
-                                        width: 6,
+                                        width: 3,
                                         field: {
                                             id: 9,
                                             label: 'Bob is so old!',
@@ -166,13 +176,9 @@ formsModule.factory('formRepository', function() {
                                             ]
 
                                         }
-                                    }
-                                ]
-                            },
-                            {
-                                columns: [
+                                    },
                                     {
-                                        width: 6,
+                                        width: 3,
                                         field: {
                                             id: 10,
                                             label: 'Bob is so very very old!',
@@ -186,6 +192,7 @@ formsModule.factory('formRepository', function() {
 
                                         }
                                     }
+
                                 ]
                             },
                             {
@@ -195,8 +202,12 @@ formsModule.factory('formRepository', function() {
                                         field: {
                                             id: 11,
                                             dataType: 'date',
-                                            label: 'Jim\'s birth date',
-                                            textBox: {lines: 1}
+                                            label: 'Bob\'s birth date',
+                                            textBox: {lines: 1},
+                                            validation: {
+                                                min: '1954-01-01',
+                                                max: '2004-01-01'
+                                            }
                                         }
                                     },
                                     {
@@ -204,8 +215,12 @@ formsModule.factory('formRepository', function() {
                                         field: {
                                             id: 12,
                                             dataType: 'date',
-                                            label: 'Bob\'s birth date',
-                                            textBox: {lines: 1}
+                                            label: 'Jim\'s birth date',
+                                            textBox: {lines: 1},
+                                            validation: {
+                                                min: '1954-01-01',
+                                                max: '2004-01-01'
+                                            }
                                         }
                                     },
                                     {
@@ -216,10 +231,25 @@ formsModule.factory('formRepository', function() {
                                             displayRules: [
                                                 {
                                                     conditions: [
-                                                        {compareFieldId1: 11, compareFieldId2: 12, dataType: 'integer', comparison: '>'}
+                                                        {compareFieldId1: 11, compareFieldId2: 12, comparison: '>'}
                                                     ]
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: 3,
+                                        field: {
+                                            id: 14,
+                                            label: 'SSN',
+                                            textBox: {lines: 1},
+                                            validation: {
+                                                pattern: 'abc123'
+                                            }
                                         }
                                     }
                                 ]

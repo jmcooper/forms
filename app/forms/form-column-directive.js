@@ -44,9 +44,9 @@ formsModule
         function appendTextBox() {
             var textBox;
             if (field.textBox.lines && field.textBox.lines > 1)
-                textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}>"></textarea>');
+                textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}" ng-trim="true"></textarea>');
             else
-                textBox = angular.element('<input class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" type="' + getInputType(field.dataType) + '" />');
+                textBox = angular.element('<input class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" type="' + getInputType(field.dataType) + '" ng-trim="true"/>');
 
             appendField(textBox, true);
         }
@@ -55,11 +55,30 @@ formsModule
             if (validate && (field.validation || field.dataType)) {
                 fieldElement.attr('validation', field.displayName ? field.displayName : field.label);
                 if (field.validation) {
-                    if (field.validation.required) {
+                    if (field.validation.required)
                         fieldElement.attr('required', 'required');
-                    }
-                    if (field.dataType) {
+
+                    if (field.dataType)
                         fieldElement.attr(field.dataType, '');
+
+                    if (field.validation.min)
+                        fieldElement.attr('min', field.validation.min);
+
+                    if (field.validation.max)
+                        fieldElement.attr('max', field.validation.max);
+
+                    if (field.validation.minlength) {
+                        fieldElement.attr('ng-minlength', field.validation.minlength);
+                        console.log(field.validation.minlength);
+                    }
+
+                    if (field.validation.maxlength)
+                        fieldElement.attr('ng-maxlength', field.validation.maxlength);
+
+                    if (field.validation.pattern) {
+                        fieldElement.attr('ng-pattern', '/' + field.validation.pattern + '/');
+                        console.log(fieldElement[0])
+                        console.log(field.validation.pattern);
                     }
                 }
             }
