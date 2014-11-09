@@ -278,6 +278,19 @@ formsModule.factory('formRepository', function() {
                                         }
                                     }
                                 ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: 6,
+                                        field: {
+                                            id: 14,
+                                            label: 'Read-only Field',
+                                            readyOnlyValue: 'This field can\'t be edited and isn\'t bound to a model.',
+                                            textBox: {lines: 1}
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     }

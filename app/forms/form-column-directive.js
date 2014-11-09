@@ -48,9 +48,16 @@ formsModule
         function appendTextBox() {
             var textBox;
             if (field.textBox.lines && field.textBox.lines > 1)
-                textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" rows="{{column.field.textBox.lines}}" ng-trim="true"></textarea>');
+                textBox = angular.element('<br/><textarea class="form-control" name="field' + field.id + ' rows="{{column.field.textBox.lines}}" ng-trim="true"></textarea>');
             else
-                textBox = angular.element('<input class="form-control" name="field' + field.id + '" ng-model="' + ngModel + '" type="' + getInputType(field.dataType) + '" ng-trim="true"/>');
+                textBox = angular.element('<input class="form-control" name="field' + field.id + ' type="' + getInputType(field.dataType) + '" ng-trim="true"/>');
+
+            if (field.readyOnlyValue) {
+                textBox.attr('disabled', 'true');
+                textBox.attr('value', field.readyOnlyValue);
+            }
+            else
+                textBox.attr('ng-model', ngModel);
 
             appendField(textBox, true);
         }
@@ -108,7 +115,8 @@ formsModule
         $scope.getFormGroupClass = function () {
             var result = "form-group col-md-" + $scope.column.width;
             var field = $scope.form['field' + $scope.column.field.id];
-            if ($scope.column.field.validation && field.$invalid && field.$dirty) {
+
+            if ($scope.column.field.validation && field && field.$invalid && field.$dirty) {
                 result += " has-error";
             }
             return result
