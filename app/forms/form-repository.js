@@ -19,22 +19,8 @@ formsModule.factory('formRepository', function() {
                                             {label: 'Medium', value: 'Medium'},
                                             {label: 'Low', value: 'Low'}
                                         ],
-//                                        validation: {
-//                                            required: true,
-//                                            minValue: 'number|date',
-//                                            maxValue: 'number|date',
-//                                            regex: 'abc',
-//                                            requiredRules: [
-//                                                {
-//                                                    or: true,
-//                                                    conditions: [
-//                                                        {fieldId: 2, value: 'Yes'}
-////*************                                                        //{fieldId: 2, operator: '>=', value: 10} //need to do this
-//                                                    ]
-//                                                }
-//                                            ],
+//***???
                                             requiredValueRules: {
-                                                expectedValue: 'foo',
                                                 rules: [
                                                 {
                                                     or: true,
@@ -43,6 +29,7 @@ formsModule.factory('formRepository', function() {
                                                     ]
                                                 }]
                                             }
+//***???
                                         }
                                     },
                                 {
