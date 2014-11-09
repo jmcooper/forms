@@ -1,8 +1,8 @@
 formsModule.factory('rulesEngine', function() {
     return {
-        buildRuleExpression: function(field, allFields) {
+        buildRuleExpression: function(rules, allFields) {
             var expression = '';
-            angular.forEach(field.displayRules, function(rule) {
+            angular.forEach(rules, function(rule) {
                 if (expression)  expression += ' && ';
                 expression += buildExpressionForRule(rule, allFields);
             });

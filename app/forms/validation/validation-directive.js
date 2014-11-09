@@ -9,11 +9,11 @@ formsModule.directive('validation', function ($compile) {
 
             var formName = element[0].form.name;
 
-
-            if (attrs.required) {
+            if (attrs.required || attrs.ngRequired) {
+                var message = attrs.ngRequiredMessage ? attrs.ngRequiredMessage : 'Required';
                 var errorMessageElement = getNewErrorMessageElement()
                     .attr('ng-show', formName + '[\'' + attrs.name + '\'].$error.required && ' + formName + '[\'' + attrs.name + '\'].$dirty')
-                    .text('Required');
+                    .text(message);
                 element.after($compile(errorMessageElement)(scope));
             }
             if (attrs.ngPattern) {

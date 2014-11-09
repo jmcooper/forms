@@ -5,43 +5,34 @@ formsModule.factory('formRepository', function() {
                 pages: [
                     {
                         rows: [
-                            {columns: [
-                                {
-                                    width: 3,
-                                    field: {
-                                        id: 1,
-                                        displayName: 'Overall Risk',
-                                        label: 'Opinion of Overall Risk:',
-                                        //dateType: 'Number|Date|undefined',
-                                        options: [
-                                            {label: 'Very High', value: 'Very High'},
-                                            {label: 'High', value: 'High'},
-                                            {label: 'Medium', value: 'Medium'},
-                                            {label: 'Low', value: 'Low'}
-                                        ],
-//***???
-                                            requiredValueRules: {
-                                                rules: [
-                                                {
-                                                    or: true,
-                                                    conditions: [
-                                                        {fieldId: 2, value: 'Yes'}
-                                                    ]
-                                                }]
-                                            }
-//***???
+                            {
+                                columns: [
+                                    {
+                                        width: 3,
+                                        field: {
+                                            id: 1,
+                                            displayName: 'Overall Risk',
+                                            label: 'Opinion of Overall Risk:',
+                                            //dateType: 'Number|Date|undefined',
+                                            options: [
+                                                {label: 'Very High', value: 'Very High'},
+                                                {label: 'High', value: 'High'},
+                                                {label: 'Medium', value: 'Medium'},
+                                                {label: 'Low', value: 'Low'}
+                                            ]
                                         }
                                     },
-                                {
-                                    width: 3,
-                                    field: {
-                                        id: 2,
-                                        displayName: 'Recommendations Provided',
-                                        label: 'Recommendations to be Provided:',
-                                        options: [{label: 'Yes', value: 'Yes'}, {label: 'No', value: 'No'}]
+                                    {
+                                        width: 3,
+                                        field: {
+                                            id: 2,
+                                            displayName: 'Recommendations Provided',
+                                            label: 'Recommendations to be Provided:',
+                                            options: [{label: 'Yes', value: 'Yes'}, {label: 'No', value: 'No'}]
+                                        }
                                     }
-                                }
-                            ]},
+                                ]
+                            },
                             {
                                 columns: [
                                     {
@@ -108,6 +99,27 @@ formsModule.factory('formRepository', function() {
                                     {
                                         width: 12,
                                         field: {
+                                            id: 5,
+                                            label: 'If Very High is selected for Overall Risk OR Yes is selected for Recommendations, then...',
+                                            displayRules: [
+                                                {
+                                                    or: true,
+                                                    conditions: [
+                                                        {fieldId: 1, value: 'Very High'},
+                                                        {fieldId: 2, value: 'Yes'}
+                                                    ]
+                                                }
+                                            ]
+
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: 12,
+                                        field: {
                                             id: 6,
                                             displayName: 'Business Description',
                                             label: 'Describe business operations, business description, services and products offered, and surrounding buildings/exposures, etc.',
@@ -115,6 +127,31 @@ formsModule.factory('formRepository', function() {
                                             validation: {
                                                 minlength: 20,
                                                 maxlength: 500
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: 12,
+                                        field: {
+                                            id: 50,
+                                            displayName: 'Recommendations',
+                                            label: 'Recommendations',
+                                            textBox: {lines: 5},
+                                            validation : {
+                                                requiredValueRules: {
+                                                    validationMessage: 'Recommendations is required when "Yes" is selected for "Recommendations to be Provided"',
+                                                    rules: [
+                                                        {
+                                                            conditions: [
+                                                                {fieldId: 2, value: 'Yes'}
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
                                             }
                                         }
                                     }

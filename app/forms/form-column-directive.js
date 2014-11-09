@@ -1,5 +1,5 @@
 formsModule
-    .directive('formColumn', function($compile) {
+    .directive('formColumn', function($compile, rulesEngine) {
         var directiveScope, directiveElement, field, ngModel;
         return {
             restrict: 'E',
@@ -58,6 +58,13 @@ formsModule
                     if (field.validation.required)
                         fieldElement.attr('required', 'required');
 
+                    if (!field.validation.required && field.validation.requiredValueRules && field.validation.requiredValueRules.rules && field.validation.requiredValueRules.rules.length > 0) {
+                        fieldElement.attr('ng-required', rulesEngine.buildRuleExpression(field.validation.requiredValueRules.rules));
+                        if (field.validation.requiredValueRules.validationMessage) {
+                            fieldElement.attr('ng-required-message', field.validation.requiredValueRules.validationMessage);
+                        }
+                    }
+
                     if (field.dataType)
                         fieldElement.attr(field.dataType, '');
 
@@ -92,7 +99,7 @@ formsModule
         }
     })
     .controller('FormColumnController', function($scope, rulesEngine) {
-        var displayRule = rulesEngine.buildRuleExpression($scope.column.field, $scope.allFields);
+        var displayRule = rulesEngine.buildRuleExpression($scope.column.field.displayRules, $scope.allFields);
 
         $scope.getFormGroupClass = function () {
             var result = "form-group col-md-" + $scope.column.width;
