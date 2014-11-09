@@ -67,19 +67,14 @@ formsModule
                     if (field.validation.max)
                         fieldElement.attr('max', field.validation.max);
 
-                    if (field.validation.minlength) {
+                    if (field.validation.minlength)
                         fieldElement.attr('ng-minlength', field.validation.minlength);
-                        console.log(field.validation.minlength);
-                    }
 
                     if (field.validation.maxlength)
                         fieldElement.attr('ng-maxlength', field.validation.maxlength);
 
-                    if (field.validation.pattern) {
+                    if (field.validation.pattern)
                         fieldElement.attr('ng-pattern', '/' + field.validation.pattern + '/');
-                        console.log(fieldElement[0])
-                        console.log(field.validation.pattern);
-                    }
                 }
             }
             var result = $(fieldElement).appendTo(directiveElement);
