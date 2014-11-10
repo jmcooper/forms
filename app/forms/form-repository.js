@@ -269,14 +269,27 @@ formsModule.factory('formRepository', function() {
                                     {
                                         width: 6,
                                         field: {
-                                            id: 14,
+                                            id: 15,
                                             label: 'Read-only Field',
-                                            readyOnlyValue: 'This field can\'t be edited and isn\'t bound to a model.',
+                                            readyOnlyValue: 'This field can\'t be edited.',
                                             textBox: {lines: 1}
                                         }
                                     }
                                 ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: 6,
+                                        field: {
+                                            id: 16,
+                                            label: 'Current location',
+                                            dataType: 'location'
+                                        }
+                                    }
+                                ]
                             }
+
                         ]
                     }
                 ]

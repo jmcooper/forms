@@ -21,7 +21,7 @@ formsModule
                 scope.form = form;
 
 
-                if (field.label)
+                if (field.label && field.dataType !== 'location')
                     appendLabel();
 
                 if (field.options && field.options.length > 0)
@@ -29,6 +29,10 @@ formsModule
 
                 if (field.textBox)
                     appendTextBox();
+
+                if (field.dataType === 'location') {
+                    appendLocationButton();
+                }
 
                 var defaultValue = getDefaultValue();
                 if (defaultValue) {
@@ -55,6 +59,13 @@ formsModule
         function appendLabel() {
             var label = angular.element('<span class="field-label control-label">{{column.field.label}}</span>');
             appendField(label, false);
+        }
+
+        function appendLocationButton() {
+            var button = angular.element('<button class="btn" ng-click="captureLocation(' + field.id + ')">{{column.field.label}}</span>');
+            appendField(button, false);
+            var locationSpan = angular.element('<span>{{formPageData.field' + field.id + '}}</span>');
+            appendField(locationSpan, false);
         }
 
         function appendSelectList() {
@@ -126,7 +137,7 @@ formsModule
             return 'text';
         }
     })
-    .controller('FormColumnController', function($scope, rulesEngine) {
+    .controller('FormColumnController', function($scope, rulesEngine, $window) {
         var displayRule = rulesEngine.buildRuleExpression($scope.column.field.displayRules, $scope.allFields);
 
         $scope.getFormGroupClass = function () {
@@ -146,4 +157,16 @@ formsModule
 
             return true;
         };
+
+        $scope.captureLocation = function(fieldId) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    $scope.formPageData['field' + fieldId] = position;
+                },
+                function() {
+                    $scope.formPageData['field' + fieldId] = 'unavailable';
+                },
+                {maximumAge:0, timeout:10}
+            );
+        }
     });
